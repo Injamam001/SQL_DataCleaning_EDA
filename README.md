@@ -71,7 +71,7 @@ CREATE TABLE `layoffs_copy1` (
 INSERT INTO layoffs_copy1
 SELECT *,
 	ROW_NUMBER() OVER
-		(PARTITION BY company, location, industry, total_laid_off, date, stage, country, funds_raised_millions) AS row_num
+	(PARTITION BY company, location, industry, total_laid_off, date, stage, country, funds_raised_millions) AS row_num
 FROM layoffs_copy;
 
 --  step - 4: deleting duplicate rows.
@@ -80,4 +80,5 @@ DELETE
 FROM layoffs_copy1
 WHERE row_num >1;
 ```
+
 
