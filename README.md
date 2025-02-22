@@ -21,7 +21,7 @@ You can access and download the dataset used for this project. To access and dow
 ## Data Cleaning with SQL. 
 Note that all the code is written in MySQL Workbench. To download sql code file click [HERE](https://github.com/Injamam001/SQL_DataCleaning_EDA/blob/main/SQL_Query_DataCleaning.sql)
 
-### Removing duplicates
+#### Removing duplicates
 
 ```sql
 /*
@@ -80,7 +80,7 @@ DELETE
 FROM layoffs_copy1
 WHERE row_num >1;
 ```
-### Standardizing data
+#### Standardizing data
 ```sql
 -- removing leading and trailing spaces
 
@@ -110,7 +110,7 @@ SET date = STR_TO_DATE(date,'%m/%d/%Y');
 ALTER TABLE layoffs_copy1
 MODIFY COLUMN date DATE;
 ```
-### Dealing with null and blank values
+#### Dealing with null and blank values
 ```sql
 UPDATE layoffs_copy1
 SET industry = 'Travel' 
@@ -135,7 +135,7 @@ FROM layoffs_copy1
 WHERE total_laid_off IS NULL
 AND funds_raised_millions IS NULL;
 ```
-### Deleting unnecessary columns
+#### Deleting unnecessary columns
 ```sql
 ALTER TABLE layoffs_copy1
 DROP COLUMN row_num;
@@ -144,7 +144,7 @@ DROP COLUMN row_num;
 ## Exploratory Data Analysis (EDA)
 To download sql code file click [HERE](https://github.com/Injamam001/SQL_DataCleaning_EDA/blob/main/SQL_Query_EDA.sql)
 
-###  Which industry has the highest total layoffs?
+####  Which industry has the highest total layoffs?
 ```sql
 SELECT industry, SUM(total_laid_off) AS highest_total_layoff
 FROM layoffs_copy1
@@ -153,7 +153,7 @@ ORDER BY highest_total_layoff DESC
 LIMIT 1;
 ```
 
-### What is the distribution of layoffs across different countries?
+#### What is the distribution of layoffs across different countries?
 ```sql
 SELECT country, SUM(total_laid_off) AS layoff_distribution
 FROM layoffs_copy1
@@ -161,7 +161,7 @@ GROUP BY country
 ORDER BY layoff_distribution DESC;
 ```
 
-### How does the percentage of employees laid off vary by company size (e.g., funds raised or total_laid_off)?
+#### How does the percentage of employees laid off vary by company size (e.g., funds raised or total_laid_off)?
 ```sql
 SELECT company, 
        funds_raised_millions, 
@@ -171,7 +171,7 @@ FROM layoffs_copy
 ORDER BY funds_raised_millions DESC, total_laid_off DESC;
 ```
 
-### Is there a correlation between funds raised and the total number of layoffs?
+#### Is there a correlation between funds raised and the total number of layoffs?
 ```sql
 SELECT 
     (SUM((funds_raised_millions - avg_funds) * (total_laid_off - avg_layoffs))) / 
@@ -185,7 +185,7 @@ FROM
     FROM layoffs_copy1) AS subquery;
 ```
 
-### Which locations (cities or regions) have experienced the highest number of layoffs?
+#### Which locations (cities or regions) have experienced the highest number of layoffs?
 ```sql
 SELECT 
 	location, 
@@ -196,7 +196,7 @@ ORDER BY total_layoff DESC
 ;
 ```
 
-### What industries show the highest percentage of workforce layoffs (percentage_laid_off)?
+#### What industries show the highest percentage of workforce layoffs (percentage_laid_off)?
 ```sql
 SELECT 
     industry, 
@@ -206,7 +206,7 @@ GROUP BY industry
 ORDER BY max_percentage_laid_off DESC;
 ```
 
-###  Which companies have the highest funds raised but are still laying off a significant number of employees?
+####  Which companies have the highest funds raised but are still laying off a significant number of employees?
 ```sql
 SELECT 
     company, 
